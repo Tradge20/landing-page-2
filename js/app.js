@@ -24,23 +24,6 @@
  */
 const sections = document.querySelectorAll("section");
 let sectTops = [];
-/**
- * Start Helper Functions
- *
- */
-function getSectTops() {
-  const footTop =
-    document.getElementById("foot").getBoundingClientRect().top +
-    window.pageYOffset;
-  for (let i = 0; i < sections.length; i++) {
-    let tp = sections[i].getBoundingClientRect().top + window.pageYOffset;
-    sectTops[i] = tp;
-    if (i + 1 == sections.length) {
-      sectTops[i + 1] = footTop;
-    }
-  }
-  console.log(window.pageYOffset);
-}
 
 // removes active classes from sections and anchors
 function activeSect() {
@@ -50,7 +33,7 @@ function activeSect() {
     ancs[i].classList.remove("active");
   }
 }
-
+// checks where the viewport is while strolling and adds active class when section matches requirements
 function chkScroll() {
   const pos = window.pageYOffset;
   const ancs = document.querySelectorAll("a");
@@ -68,15 +51,18 @@ function chkScroll() {
 // build the nav
 function bldNav() {
   for (let i = 0; i < sections.length; i++) {
+    // get the ul, create li and anchor tags
     const navMenu = document.getElementById("navbar__list");
     const navItem = document.createElement("li");
     const navItemAnchor = document.createElement("a");
 
+    // get data to use as li text for sections, add it to li
     const aText = sections[i].getAttribute("data-nav");
     navItemAnchor.classList.add("navItemAnc");
     navItemAnchor.innerHTML = aText;
     navItem.classList.add("navItem");
 
+    // add anchors to links
     navItemAnchor.setAttribute("href", "#" + sections[i].id);
     navItemAnchor.setAttribute("data-id", sections[i].id);
 
@@ -89,6 +75,7 @@ function bldNav() {
       const sectId = this.getAttribute("data-id");
       const sectToScroll = document.getElementById(sectId);
 
+      // Scroll to section on link click
       activeSect();
       this.classList.add("active");
       sectToScroll.classList.add("your-active-class");
@@ -99,11 +86,8 @@ function bldNav() {
   }
 }
 
+// Build menu
 bldNav();
 getSectTops();
-window.addEventListener("scroll", chkScroll);
-// Build menu
-
-// Scroll to section on link click
-
 // Set sections as active
+window.addEventListener("scroll", chkScroll);

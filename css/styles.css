@@ -86,7 +86,7 @@ section {
 }
 
 .navItemAnc.active {
-  color: red;
+  color: rgb(162, 189, 13);
 }
 
 .navbar__menu .menu__link {
