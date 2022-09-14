@@ -25,6 +25,20 @@
 const sections = document.querySelectorAll("section");
 let sectTops = [];
 
+function getSectTops() {
+  const footTop =
+    document.getElementById("foot").getBoundingClientRect().top +
+    window.pageYOffset;
+  for (let i = 0; i < sections.length; i++) {
+    let tp = sections[i].getBoundingClientRect().top + window.pageYOffset;
+    sectTops[i] = tp;
+    if (i + 1 == sections.length) {
+      sectTops[i + 1] = footTop;
+    }
+  }
+  console.log(window.pageYOffset);
+}
+
 // removes active classes from sections and anchors
 function activeSect() {
   const ancs = document.querySelectorAll("a");
